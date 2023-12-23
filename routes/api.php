@@ -17,6 +17,8 @@ use App\Http\Controllers\Auth\AuthController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
+Route::get('/auth/{google}', [AuthController::class, 'redirectToProvider']);
+Route::get('/auth/{google}/callback', [AuthController::class, 'handleProviderCallback']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);

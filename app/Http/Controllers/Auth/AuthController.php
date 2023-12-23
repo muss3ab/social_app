@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Laravel\Socialite\Facades\Socialite;
+
 
 class AuthController extends Controller
 {
@@ -68,6 +70,33 @@ class AuthController extends Controller
     {
         $request->user()->currentAccessToken()->delete();
         return response()->json(['message' => 'Logged out']);
+    }
+
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function handleProviderCallback($provider)
+    {
+
+        $user = Socialite::driver($provider)->user();
+
+        $existingUser = User::where('email', $user->email)->first();
+        if ($existingUser) {
+            auth()->login($existingUser, true);
+            // ... TODO::more logic
+            return redirect('/user');
+        } else {
+
+            $newUser = User::create([
+                'name' => $user->name,
+                'email' => $user->email,
+                'password' => bcrypt('password')
+            ]);
+            auth()->login($newUser, true);
+            return redirect('/user');
+        }
     }
 
 }
