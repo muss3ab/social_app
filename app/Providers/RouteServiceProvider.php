@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use App\Models\Comment;
+use App\Models\Like;
 use App\Models\User;
 use App\Models\Post;
 
@@ -42,6 +43,8 @@ class RouteServiceProvider extends ServiceProvider
 
         Route::bind('user', fn ($id) => User::findOrFail(id: $id));
         Route::bind('post', fn ($id) => Post::findOrFail(id: $id));
+        Route::bind('comment', fn ($id) => Comment::findOrFail(id: $id));
+        Route::bind('like', fn ($id) => Like::findOrFail(id: $id));
 
     }
 }

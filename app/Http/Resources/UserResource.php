@@ -22,7 +22,8 @@ class UserResource extends JsonResource
             "phone"=>$this->phone,
             "address"=>$this->address,
             "country"=>$this->country,
-            "city"=>$this->city
+            "city"=>$this->city,
+            'joined_at' => $this->created_at->diffForHumans(),
         ];
     }
 }

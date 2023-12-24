@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Resources\PostResource;
 use Illuminate\Support\Facades\Storage;
 use App\Models\User;
+use App\Models\Comment;
+use App\Models\Like;
+
+
 use Illuminate\Support\Facades\DB;
 class PostController extends Controller
 {
@@ -106,5 +110,66 @@ class PostController extends Controller
                 'message' => 'Something went wrong! try again later',
             ], 500);
         }
+    }
+
+    public function destroy(Post $post)
+    {
+        try {
+            DB::beginTransaction();
+            if ($post->image) {
+                Storage::disk('public')->delete($post->image);
+            }
+            if ($post->video) {
+                Storage::disk('public')->delete($post->video);
+            }
+
+            $post->likes()->delete();
+            $post->comments()->delete();
+            $post->delete();
+            DB::commit();
+            return response()->json(['message' => 'Post deleted']);
+        } catch (\Throwable $th) {
+            report($throwable);
+            return response([
+                'message' => 'Something went wrong! try again later',
+            ], 500);
+        }
+    }
+
+    public function like(Post $post)
+    {
+        $post->likes()->create(['user_id' => auth()->id(),'post_id'=>$post->id]);
+        return response()->json(['message' => 'Post liked']);
+    }
+
+    public function unlike(Post $post ,Like $like)
+    {
+        $post->likes()->where('user_id', auth()->id())->delete();
+        return response()->json(['message' => 'Post unliked']);
+    }
+
+    public function comment(Request $request, Post $post)
+    {
+        $request->validate([
+            'content' => 'required|string',
+        ]);
+
+        $post->comments()->create([
+            'user_id' => auth()->id(),
+            'content' => $request->input('content'),
+            'post_id'=>$post->id
+        ]);
+
+        return response()->json(['message' => 'Comment created']);
+    }
+
+    public function uncomment(Request $request, Comment $comment )
+    {
+        if($comment->user_id != auth()->id()){
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+
+        $comment->delete();
+        return response()->json(['message' => 'Comment Deleted']);
     }
 }

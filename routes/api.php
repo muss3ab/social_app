@@ -37,9 +37,16 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/myposts', [PostController::class, 'my_posts'])->name('posts.my_posts');
     Route::get('/posts/{user}', [PostController::class, 'user_posts'])->name('posts.user');
 
-
+    // creation and update of posts
     Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
     Route::post('/posts/update/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::post('/posts/delete/{post}', [PostController::class, 'destroy'])->name('posts.delete');
+
+    // interaction with posts
+    Route::post('/posts/like/{post}', [PostController::class, 'like'])->name('posts.like');
+    Route::post('/posts/unlike/{like}', [PostController::class, 'unlike'])->name('posts.unlike');
+    Route::post('/posts/comment/{post}', [PostController::class, 'comment'])->name('posts.comment');
+    Route::post('/posts/uncomment/{comment}', [PostController::class, 'uncomment'])->name('posts.uncomment');
 
 
     Route::post('/friend/{user}', [FriendshipController::class, 'sendRequest'])->name('friend.sendRequest');
