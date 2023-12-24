@@ -26,44 +26,14 @@ class Post extends Model
         return $this->morphMany(Comment::class,'commentable');
     }
 
-    public function images()
-    {
-        return $this->morphMany(Image::class,'imageable');
-    }
-
-    public function videos()
-    {
-        return $this->morphMany(Video::class,'videoable');
-    }
-
-    public function tags()
-    {
-        return $this->morphToMany(Tag::class,'taggable');
-    }
-
-    public function scopeLatest($query)
-    {
-        return $query->orderBy('created_at','desc');
-    }
-
     public function scopeWithLikes($query)
     {
-        return $query->withCount('likes');
-    }
-
-    public function scopeWithComments($query)
-    {
-        return $query->withCount('comments');
-    }
-
-    public function scopeWithImages($query)
-    {
-        return $query->withCount('images');
-    }
-
-    public function scopeWithVideos($query)
-    {
-        return $query->withCount('videos');
+        $query->leftJoinSub(
+            'select post_id, sum(liked) likes, sum(!liked) dislikes from likes group by post_id',
+            'likes',
+            'likes.post_id',
+            'posts.id'
+        );
     }
 
 }

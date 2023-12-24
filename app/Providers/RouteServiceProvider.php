@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
 use App\Models\Comment;
 use App\Models\User;
+use App\Models\Post;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -40,5 +41,7 @@ class RouteServiceProvider extends ServiceProvider
         });
 
         Route::bind('user', fn ($id) => User::findOrFail(id: $id));
+        Route::bind('post', fn ($id) => Post::findOrFail(id: $id));
+
     }
 }

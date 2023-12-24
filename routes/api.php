@@ -32,9 +32,14 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/profile/update/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
 
-    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
-    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::get('/feeds', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/show-post/{post}', [PostController::class, 'show'])->name('posts.show');
+    Route::get('/myposts', [PostController::class, 'my_posts'])->name('posts.my_posts');
+    Route::get('/posts/{user}', [PostController::class, 'user_posts'])->name('posts.user');
+
+
     Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+    Route::post('/posts/update/{post}', [PostController::class, 'update'])->name('posts.update');
 
 
     Route::post('/friend/{user}', [FriendshipController::class, 'sendRequest'])->name('friend.sendRequest');

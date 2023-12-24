@@ -65,108 +65,25 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'friendships', 'friend_id', 'user_id');
     }
 
-    // public function friendRequestsSent()
-    // {
-    //     return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id');
-    // }
+    public function friendRequestsSent()
+    {
+        return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id');
+    }
 
-    // public function posts()
-    // {
-    //     return $this->hasMany(Post::class);
-    // }
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 
-    // public function likes()
-    // {
-    //     return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id');
-    // }
+    public function likes()
+    {
+        return $this->belongsToMany(Post::class, 'likes', 'user_id', 'post_id');
+    }
 
-    // public function comments()
-    // {
-    //     return $this->hasMany(Comment::class);
-    // }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 
-    // public function commentLikes()
-    // {
-    //     return $this->belongsToMany(Comment::class, 'comment_likes', 'user_id', 'comment_id');
-    // }
 
-    // public function commentReplies()
-    // {
-    //     return $this->hasMany(CommentReply::class);
-    // }
-
-    // public function commentReplyLikes()
-    // {
-    //     return $this->belongsToMany(CommentReply::class, 'comment_reply_likes', 'user_id', 'comment_reply_id');
-    // }
-
-    // public function notifications()
-    // {
-    //     return $this->hasMany(Notification::class);
-    // }
-
-    // public function messages()
-    // {
-    //     return $this->hasMany(Message::class);
-    // }
-
-    // public function messageReplies()
-    // {
-    //     return $this->hasMany(MessageReply::class);
-    // }
-
-    // public function messageReplyLikes()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_reply_likes', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageLikes()
-    // {
-    //     return $this->belongsToMany(Message::class, 'message_likes', 'user_id', 'message_id');
-    // }
-
-    // public function messageRepliesSent()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageRepliesReceived()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageRepliesSentTo()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageRepliesReceivedFrom()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageRepliesSentToUser()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageRepliesReceivedFromUser()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageRepliesSentToUserFromUser()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageRepliesReceivedFromUserToUser()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
-
-    // public function messageRepliesSentToUserFromUserToUser()
-    // {
-    //     return $this->belongsToMany(MessageReply::class, 'message_replies', 'user_id', 'message_reply_id');
-    // }
 }
