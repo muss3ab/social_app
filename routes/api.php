@@ -2,7 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\FriendshipController;
+use App\Http\Controllers\PostController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,4 +28,19 @@ Route::get('/auth/{google}/callback', [AuthController::class, 'handleProviderCal
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+
+
+    Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts/store', [PostController::class, 'store'])->name('posts.store');
+
+
+    Route::post('/friend/{user}', [FriendshipController::class, 'sendRequest'])->name('friend.sendRequest');
+    Route::post('/friend/{friendship}/accept', [FriendshipController::class, 'acceptRequest'])->name('friend.acceptRequest');
+    Route::post('/friend/{friendship}/decline', [FriendshipController::class, 'declineRequest'])->name('friend.declineRequest');
+    Route::get('/friends', [FriendshipController::class, 'showFriends'])->name('friends.index');
+
 });
