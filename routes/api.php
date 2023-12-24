@@ -28,9 +28,8 @@ Route::get('/auth/{google}/callback', [AuthController::class, 'handleProviderCal
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [AuthController::class, 'user']);
     Route::get('/logout', [AuthController::class, 'logout']);
-    Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/{user}', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/profile/update/{user}', [ProfileController::class, 'update'])->name('profile.update');
 
 
     Route::get('/posts', [PostController::class, 'index'])->name('posts.index');

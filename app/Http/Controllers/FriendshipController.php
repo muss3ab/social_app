@@ -29,6 +29,12 @@ class FriendshipController extends Controller
         return response()->json(['message'=>'Friend request declined!']);
 
     }
+    public function showRequests(Friendship $friendship)
+    {
+        $friendship->delete();
+        return response()->json(['message'=>'Friend request cancelled!']);
+
+    }
 
     public function showFriends()
     {

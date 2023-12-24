@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Post::class);
-            $table->morphs('commentable')->nullable();
+            $table->morphs('commentable');
             $table->text('content');
             $table->timestamps();
         });

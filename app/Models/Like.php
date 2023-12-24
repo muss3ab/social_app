@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 class Like extends Model
 {
     use HasFactory;
@@ -27,4 +27,15 @@ class Like extends Model
         return $this->morphMany(Comment::class,'commentable');
     }
 
+    public function likeable(): MorphTo
+    {
+        return $this->morphTo();
+    }
+    protected static function morphModels(): array
+    {
+        return [
+            'comment' => Comment::class,
+            'post' => Post::class,
+        ];
+    }
 }
