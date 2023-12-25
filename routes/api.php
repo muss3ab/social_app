@@ -50,9 +50,12 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts/share/{post}', [PostController::class, 'share'])->name('posts.share');
 
     // friendship
+    Route::get('/friends', [FriendshipController::class, 'showFriends'])->name('friends.index');
+    Route::get('/requests', [FriendshipController::class, 'showRequests'])->name('friends.requests');
+    Route::get('/my-requests', [FriendshipController::class, 'MyFriendsRequests'])->name('friends.my_requests');
+    //  friendship ops
     Route::post('/friend/{user}', [FriendshipController::class, 'sendRequest'])->name('friend.sendRequest');
     Route::post('/friend/{friendship}/accept', [FriendshipController::class, 'acceptRequest'])->name('friend.acceptRequest');
     Route::post('/friend/{friendship}/decline', [FriendshipController::class, 'declineRequest'])->name('friend.declineRequest');
-    Route::get('/friends', [FriendshipController::class, 'showFriends'])->name('friends.index');
 
 });

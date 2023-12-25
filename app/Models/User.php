@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-
+use App\Models\Friendships;
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -42,9 +42,13 @@ class User extends Authenticatable
 
     public function friends()
     {
-        return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id')
-            ->where('status', 'accepted')
-            ->withTimestamps();
+
+        return $this->hasMany(Friendship::class, 'user_id')
+            ->where('status', 'accepted');
+
+        // return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id')
+            // ->where('status', 'accepted');
+
     }
 
 

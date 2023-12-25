@@ -17,14 +17,10 @@ class PostController extends Controller
 {
     public function index()
     {
-        // $posts = Post::latest()->paginate(10);
-        $friends = auth()->user()->friends()->pluck('id');
 
-            // Get the most recent posts from the user's friends
-            $posts = Post::whereIn('user_id', $friends)
-                        ->latest()
-                        ->paginate(10);
-
+        $friends = auth()->user()->friends()->select('friendships.friend_id')->pluck('friend_id');
+        $friends->push(auth()->id());
+        $posts = Post::whereIn('user_id', $friends)->latest()->paginate(10);
         return PostResource::collection($posts);
     }
 
