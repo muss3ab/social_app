@@ -42,12 +42,8 @@ class User extends Authenticatable
 
     public function friends()
     {
-
         return $this->hasMany(Friendship::class, 'user_id')
             ->where('status', 'accepted');
-
-        // return $this->belongsToMany(User::class, 'friendships', 'user_id', 'friend_id')
-            // ->where('status', 'accepted');
 
     }
 

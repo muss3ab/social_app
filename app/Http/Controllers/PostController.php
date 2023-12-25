@@ -17,11 +17,16 @@ class PostController extends Controller
 {
     public function index()
     {
-
         $friends = auth()->user()->friends()->select('friendships.friend_id')->pluck('friend_id');
         $friends->push(auth()->id());
+        $shares = Share::whereIn('user_id', $friends)->select('post_id')->pluck('post_id');
+
+        $shared_posts = Post::whereIn('id', $shares)->latest()->paginate(10);
         $posts = Post::whereIn('user_id', $friends)->latest()->paginate(10);
-        return PostResource::collection($posts);
+        return[
+            'posts' => PostResource::collection($posts),
+            'shared_posts' => PostResource::collection($shared_posts),
+        ];
     }
 
     public function my_posts()
@@ -180,6 +185,7 @@ class PostController extends Controller
     public function share(Post $post)
     {
         $post->shares()->create(['user_id' => auth()->id(),'post_id'=>$post->id]);
+
         return response()->json(['message' => 'Post shared']);
 
     }
