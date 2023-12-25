@@ -25,6 +25,10 @@ class Post extends Model
     {
         return $this->morphMany(Comment::class,'commentable');
     }
+    public function shares()
+    {
+        return $this->hasMany(Share::class);
+    }
 
     public function scopeWithLikes($query)
     {

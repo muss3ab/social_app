@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\User;
 use App\Models\Comment;
 use App\Models\Like;
+use App\Models\Share;
 
 
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,14 @@ class PostController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->paginate(10);
+        // $posts = Post::latest()->paginate(10);
+        $friends = auth()->user()->friends()->pluck('id');
+
+            // Get the most recent posts from the user's friends
+            $posts = Post::whereIn('user_id', $friends)
+                        ->latest()
+                        ->paginate(10);
+
         return PostResource::collection($posts);
     }
 
@@ -171,5 +179,12 @@ class PostController extends Controller
 
         $comment->delete();
         return response()->json(['message' => 'Comment Deleted']);
+    }
+
+    public function share(Post $post)
+    {
+        $post->shares()->create(['user_id' => auth()->id(),'post_id'=>$post->id]);
+        return response()->json(['message' => 'Post shared']);
+
     }
 }

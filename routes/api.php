@@ -47,8 +47,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/posts/unlike/{like}', [PostController::class, 'unlike'])->name('posts.unlike');
     Route::post('/posts/comment/{post}', [PostController::class, 'comment'])->name('posts.comment');
     Route::post('/posts/uncomment/{comment}', [PostController::class, 'uncomment'])->name('posts.uncomment');
+    Route::post('/posts/share/{post}', [PostController::class, 'share'])->name('posts.share');
 
-
+    // friendship
     Route::post('/friend/{user}', [FriendshipController::class, 'sendRequest'])->name('friend.sendRequest');
     Route::post('/friend/{friendship}/accept', [FriendshipController::class, 'acceptRequest'])->name('friend.acceptRequest');
     Route::post('/friend/{friendship}/decline', [FriendshipController::class, 'declineRequest'])->name('friend.declineRequest');

@@ -11,6 +11,7 @@ use App\Models\Comment;
 use App\Models\Like;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Friendship;
 
 class RouteServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::bind('post', fn ($id) => Post::findOrFail(id: $id));
         Route::bind('comment', fn ($id) => Comment::findOrFail(id: $id));
         Route::bind('like', fn ($id) => Like::findOrFail(id: $id));
+        Route::bind('friendship', fn ($id) => Friendship::findOrFail(id: $id));
 
     }
 }
